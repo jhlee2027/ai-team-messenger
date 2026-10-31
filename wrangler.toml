@@ -11,8 +11,8 @@ MOCK_ENABLED = "false"
 FREE_POLICY = '{}'
 [[d1_databases]]
 binding = "DB"
-database_name = "messenger"
-database_id = "00000000-0000-0000-0000-000000000000"
+database_name = "ai-team-messenger"
+database_id = "626d4b77-391a-48ac-9ac5-9f96955cb9f8"
 migrations_dir = "migrations"
 # Enable only on a Workers Free account after checking the model and quota.
 # [ai]

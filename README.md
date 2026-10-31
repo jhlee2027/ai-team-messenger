@@ -103,7 +103,7 @@ config/                 정책 설정 예시
 
 `tests/app.test.ts`는 실제 로컬 workerd + D1에서 인증, CORS, CRUD, 동시 점유, ID 멘션, 토론, 요약, 자율 모드, 취소, 한도 경쟁, 미연결 차단, 429, 삭제 보존을 검증합니다. UI는 DOM 기반 테스트로 로그인 이후 화면, Markdown XSS 정화, 설정 및 메시지 저장 동작을 검사합니다. 네트워크 어댑터의 응답 형식은 가상 HTTP 응답으로 검사합니다.
 
-**제공업체 실계정 생성 응답, 공개 GitHub Pages 접속, 원격 D1/Workers 배포, 실제 모바일 브라우저 시각 검증은 아직 수행하지 않았습니다.** 테스트 성공이 이 항목을 증명하지는 않습니다.
+GitHub Pages 공개 배포, 원격 D1 마이그레이션 및 Workers 배포를 완료했습니다. 실제 AI 생성 응답과 모바일 브라우저 시각 검증은 아직 수행하지 않았습니다. 테스트 성공이 실제 AI 연결을 증명하지는 않습니다.
 
 ## 추후 확장
 
@@ -114,3 +114,10 @@ config/                 정책 설정 예시
 - 승인 기반 도구 인터페이스 확장 (현재 실제 도구 실행은 없음)
 
 저장소: https://github.com/jhlee2027/ai-team-messenger · 기본 브랜치: `main`. 마지막 커밋은 `git log -1 --oneline`으로 확인합니다.
+
+## 현재 배포
+
+- 사이트: https://jhlee2027.github.io/ai-team-messenger/
+- API: https://ai-team-messenger.ai-team-messenger.workers.dev
+- 서버 접근 토큰은 Workers Secret으로 관리하며 Git에 포함하지 않습니다.
+- 새 설치에서는 접근 토큰을 설정해야 하고, 실제 AI는 무료 정책을 확인한 후 활성화합니다.

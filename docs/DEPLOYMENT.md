@@ -1,12 +1,12 @@
 # 외부 서비스 설정 체크리스트
 
-이 작업에서는 외부 저장소·계정·유료 플랜을 생성하거나 API 키를 등록하지 않았습니다. 아래 작업은 사용자 계정으로 수행합니다.
+아래는 새 계정에 설치하는 절차입니다. 현재 원본 프로젝트는 이미 GitHub Pages·Workers·D1에 배포되어 있으므로 데이터베이스를 다시 만들 필요가 없습니다. 유료 플랜 전환은 하지 않았으며 AI API 키도 등록하지 않았습니다.
 
 ## Cloudflare
 
 - [ ] Workers **Free** 요금제 확인. Workers Paid 또는 유료 AI 자동 충전을 켜지 않습니다.
 - [ ] 프로젝트 터미널에서 `npx wrangler login` 실행 후 브라우저에서 로그인.
-- [ ] `npx wrangler d1 create messenger` 실행.
+- [ ] `npx wrangler d1 create ai-team-messenger` 실행.
 - [ ] 출력된 database_id를 `wrangler.toml`에 입력.
 - [ ] `npm run db:remote` 실행해 스키마 적용.
 - [ ] `openssl rand -hex 32`로 개인 접근 토큰 생성 후 `npx wrangler secret put ACCESS_TOKEN`으로 저장. 토큰은 채팅이나 GitHub에 올리지 않습니다.

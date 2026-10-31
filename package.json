@@ -8,8 +8,8 @@
     "dev:api": "wrangler dev",
     "build": "tsc --noEmit && vite build",
     "test": "tsx --test tests/*.test.ts",
-    "db:local": "wrangler d1 migrations apply messenger --local",
-    "db:remote": "wrangler d1 migrations apply messenger --remote",
+    "db:local": "wrangler d1 migrations apply DB --local",
+    "db:remote": "wrangler d1 migrations apply DB --remote",
     "deploy:api": "wrangler deploy"
   },
   "dependencies": {

@@ -42,7 +42,9 @@ const md = (s: string) =>
     ALLOWED_ATTR: ["href", "title"],
     FORBID_ATTR: ["style"],
   });
-let base = sessionStorage.getItem("apiBase") ?? "",
+let base =
+    sessionStorage.getItem("apiBase") ??
+    "https://ai-team-messenger.ai-team-messenger.workers.dev",
   token = sessionStorage.getItem("accessToken") ?? "";
 let boot: any = { rooms: [], agents: [], providers: [] },
   data: any = null,
