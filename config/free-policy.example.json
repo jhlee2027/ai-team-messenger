@@ -1,0 +1,12 @@
+{
+  "openrouter": {
+    "accountFreeOnly": false,
+    "noPaidOverflow": false,
+    "verifiedUntil": "2000-01-01T00:00:00Z",
+    "source": "https://openrouter.ai/collections/free-models",
+    "models": ["*:free"],
+    "dayLimit": 10,
+    "monthLimit": 100,
+    "tokenDayLimit": 100000
+  }
+}

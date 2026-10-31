@@ -1,0 +1,17 @@
+# Generate with: openssl rand -hex 32 ; never commit .dev.vars
+ACCESS_TOKEN=replace-with-at-least-32-random-characters
+# Only add keys for providers you explicitly enable in FREE_POLICY.
+GEMINI_API_KEY=
+GROQ_API_KEY=
+OPENROUTER_API_KEY=
+ZAI_API_KEY=
+MISTRAL_API_KEY=
+COHERE_API_KEY=
+NVIDIA_API_KEY=
+HF_API_KEY=
+# For Workers AI catalogue API (optional, registry works without it)
+CF_ACCOUNT_ID=
+CF_API_TOKEN=
+
+# Local development overrides the production GitHub Pages origin.
+ALLOWED_ORIGIN=http://127.0.0.1:5173

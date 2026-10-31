@@ -1,0 +1,19 @@
+name = "ai-team-messenger"
+main = "worker/index.ts"
+compatibility_date = "2026-08-01"
+workers_dev = true
+[vars]
+ALLOWED_ORIGIN = "https://jhlee2027.github.io"
+DAILY_LIMIT = "100"
+MONTHLY_LIMIT = "1000"
+REQUESTS_PER_MINUTE = "90"
+MOCK_ENABLED = "false"
+FREE_POLICY = '{}'
+[[d1_databases]]
+binding = "DB"
+database_name = "messenger"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"
+# Enable only on a Workers Free account after checking the model and quota.
+# [ai]
+# binding = "AI"
