@@ -2,7 +2,7 @@
 
 개인용 멀티 AI 협업 메신저. Vite + TypeScript 프런트엔드, Cloudflare Workers API, D1 저장소, GitHub Pages 배포 구성입니다.
 
-**실제 API는 기본적으로 전부 차단됩니다.** `FREE_POLICY = '{}'`이며, API 키만 추가해도 실행되지 않습니다. 무료 계정·모델·차단 정책을 확인한 운영자만 해당 제공업체를 활성화하세요. 앱 호출량은 제공업체 잔여 할당량과 다릅니다. 앱은 계정의 결제 설정을 자동으로 검증할 수 없으므로 유료 계정에 연결하면 무과금을 보장할 수 없습니다.
+**새 설치의 실제 API는 기본적으로 전부 차단됩니다.** 새 설치에 `FREE_POLICY` Secret이 없으면 API 키만 추가해도 실행되지 않습니다. 무료 계정·모델·차단 정책을 확인한 운영자만 해당 제공업체를 활성화하세요. 앱 호출량은 제공업체 잔여 할당량과 다릅니다. 앱은 계정의 결제 설정을 자동으로 검증할 수 없으므로 유료 계정에 연결하면 무과금을 보장할 수 없습니다.
 
 ## 구현 기능
 
@@ -56,7 +56,7 @@ npx wrangler secret put ACCESS_TOKEN
 npx wrangler secret put OPENROUTER_API_KEY
 ```
 
-`wrangler.toml`의 `FREE_POLICY`는 JSON 문자열입니다. `config/free-policy.example.json`은 구조 예시이며 **비활성·만료 상태**입니다. 계정의 무료 전용 여부와 자동 과금 차단, 선택한 모델의 공식 가격을 직접 확인한 후 `accountFreeOnly`, `noPaidOverflow`를 true로 바꾸고 `verifiedUntil`을 짧은 유효기간으로 설정합니다. 가급적 7일 이내로 재검증합니다. 계정이 유료 전환되면 정책을 즉시 지우세요.
+`FREE_POLICY`는 `npx wrangler secret put FREE_POLICY`로 저장하는 계정별 JSON 정책입니다. `config/free-policy.example.json`은 구조 예시이며 **비활성·만료 상태**입니다. 계정의 무료 전용 여부와 자동 과금 차단, 선택한 모델의 공식 가격을 직접 확인한 후 `accountFreeOnly`, `noPaidOverflow`를 true로 바꾸고 `verifiedUntil`을 짧은 유효기간으로 설정합니다. 가급적 7일 이내로 재검증합니다. 계정이 유료 전환되면 정책을 즉시 지우세요.
 
 - `models`: 정확한 모델 ID의 허용 목록. OpenRouter만 `*:free` 와일드카드를 지원합니다.
 - `source`: 검증한 공식 문서 URL. URL 존재만으로 무료가 증명되는 것은 아닙니다.
@@ -103,7 +103,7 @@ config/                 정책 설정 예시
 
 `tests/app.test.ts`는 실제 로컬 workerd + D1에서 인증, CORS, CRUD, 동시 점유, ID 멘션, 토론, 요약, 자율 모드, 취소, 한도 경쟁, 미연결 차단, 429, 삭제 보존을 검증합니다. UI는 DOM 기반 테스트로 로그인 이후 화면, Markdown XSS 정화, 설정 및 메시지 저장 동작을 검사합니다. 네트워크 어댑터의 응답 형식은 가상 HTTP 응답으로 검사합니다.
 
-GitHub Pages 공개 배포, 원격 D1 마이그레이션 및 Workers 배포를 완료했습니다. 실제 AI 생성 응답과 모바일 브라우저 시각 검증은 아직 수행하지 않았습니다. 테스트 성공이 실제 AI 연결을 증명하지는 않습니다.
+GitHub Pages 공개 배포, 원격 D1 마이그레이션 및 Workers 배포를 완료했습니다. 실제 AI 연결 검증 결과는 아래 현재 배포 항목을 참고하세요. 모바일 브라우저 시각 검증은 아직 수행하지 않았습니다. 테스트 성공이 실제 AI 연결을 증명하지는 않습니다.
 
 ## 추후 확장
 
@@ -121,3 +121,9 @@ GitHub Pages 공개 배포, 원격 D1 마이그레이션 및 Workers 배포를 �
 - API: https://ai-team-messenger.ai-team-messenger.workers.dev
 - 서버 접근 토큰은 Workers Secret으로 관리하며 Git에 포함하지 않습니다.
 - 새 설치에서는 접근 토큰을 설정해야 하고, 실제 AI는 무료 정책을 확인한 후 활성화합니다.
+
+### 실제 AI 연결 검증 (2026-11-01)
+
+사용자가 Workers Free 플랜임을 확인한 뒤 Llama 3.2 3B 기획자와 Llama 3.1 8B FP8 검토자를 연결했습니다. 실제 병렬 응답 2회, 토론·요약 3회, 자율 대화·요약 3회가 완료되었고 실제 토큰 수를 D1에 저장했습니다. 무료 테스트 모드는 사용하지 않았습니다. 다른 제공업체의 연결은 아직 검증하지 않았습니다.
+
+현재 계정 정책: 하루 20회, 월 300회, 일일 보수적 토큰 예약 200,000. 검증 만료는 2026-11-08 09:00 KST이며 그 이후에는 새 호출을 차단합니다. 이 정책은 공개 저장소가 아닌 Workers Secret에만 저장되며, 로컬 정책 파일은 Git에서 제외합니다. 계정이 Paid로 변경되면 정책을 즉시 비활성화해야 합니다.

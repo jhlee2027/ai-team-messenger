@@ -321,10 +321,20 @@ export class ProviderAdapter {
       };
     }
     if (this.providerId === "cloudflare") {
-      r = await this.env.AI!.run(model, {
-        messages: [{ role: "system", content: system }, ...context],
-        max_tokens: maxTokens,
-      });
+      try {
+        r = await this.env.AI!.run(model, {
+          messages: [{ role: "system", content: system }, ...context],
+          max_tokens: maxTokens,
+        });
+      } catch (error: unknown) {
+        const e = error as {status?:number;statusCode?:number;message?:string};
+        const limited = Number(e.status ?? e.statusCode) === 429 ||
+          /(?:429|rate.?limit|quota|neuron.*limit|daily.*limit)/i.test(e.message ?? "");
+        if (limited) await this.handleRateLimit(null);
+        throw new AppError(limited ? 429 : 502, limited
+          ? "Workers AI 무료 할당량 또는 속도 제한으로 중단했습니다."
+          : "Workers AI 응답 오류: 모델 상태를 확인하세요.");
+      }
       return {
         text: r.response ?? "",
         input: r.usage?.prompt_tokens,

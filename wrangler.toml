@@ -8,12 +8,12 @@ DAILY_LIMIT = "100"
 MONTHLY_LIMIT = "1000"
 REQUESTS_PER_MINUTE = "90"
 MOCK_ENABLED = "false"
-FREE_POLICY = '{}'
+# FREE_POLICY is an account-specific Workers Secret; unset means blocked.
 [[d1_databases]]
 binding = "DB"
 database_name = "ai-team-messenger"
 database_id = "626d4b77-391a-48ac-9ac5-9f96955cb9f8"
 migrations_dir = "migrations"
-# Enable only on a Workers Free account after checking the model and quota.
-# [ai]
-# binding = "AI"
+# User confirmed Workers Free; policy expires until reverified.
+[ai]
+binding = "AI"

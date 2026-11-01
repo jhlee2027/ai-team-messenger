@@ -11,7 +11,7 @@
 - [ ] `npm run db:remote` 실행해 스키마 적용.
 - [ ] `openssl rand -hex 32`로 개인 접근 토큰 생성 후 `npx wrangler secret put ACCESS_TOKEN`으로 저장. 토큰은 채팅이나 GitHub에 올리지 않습니다.
 - [ ] 선택한 AI 키를 `npx wrangler secret put OPENROUTER_API_KEY` 등으로 저장.
-- [ ] 무료 계정과 모델 가격 확인 후 `FREE_POLICY` 설정. 처음에는 제공업체 1개·낮은 호출량으로 시작.
+- [ ] 무료 계정과 모델 가격 확인 후 `npx wrangler secret put FREE_POLICY`로 JSON 정책 저장. 처음에는 제공업체 1개·낮은 호출량으로 시작.
 - [ ] `ALLOWED_ORIGIN = "https://사용자명.github.io"` 설정. URL 경로 및 마지막 `/`를 넣지 않습니다.
 - [ ] `MOCK_ENABLED = "false"` 유지.
 - [ ] Workers AI를 사용할 때만 `wrangler.toml`의 `[ai] binding = "AI"` 주석 해제.

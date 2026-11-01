@@ -619,3 +619,16 @@ test("agent deletion preserves author/model snapshots; room cascade preserves bi
     count,
   );
 });
+
+
+test("Workers AI quota failures stop without retries and successful usage is parsed", async () => {
+  let count=0;
+  const adapter=new ProviderAdapter({DB:db,AI:{run:async()=>{count++;throw Object.assign(new Error("daily neuron limit exceeded"),{status:429});}}} as unknown as Env,"cloudflare");
+  await assert.rejects(()=>adapter.generateResponse("fixture","s",[],64), /할당량/);
+  assert.equal(count,1);
+  await assert.rejects(()=>adapter.generateResponse("fixture","s",[],64), /대기/);
+  assert.equal(count,1);
+  await db.prepare("DELETE FROM providers WHERE id='cloudflare'").run();
+  const success=new ProviderAdapter({DB:db,AI:{run:async()=>({response:"연결 완료",usage:{prompt_tokens:5,completion_tokens:3}})}} as unknown as Env,"cloudflare");
+  assert.deepEqual(await success.generateResponse("fixture","s",[],64),{text:"연결 완료",input:5,output:3});
+});

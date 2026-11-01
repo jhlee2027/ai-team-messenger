@@ -5,3 +5,4 @@ dist/
 .env.local
 work/
 .DS_Store
+config/free-policy.local.json
